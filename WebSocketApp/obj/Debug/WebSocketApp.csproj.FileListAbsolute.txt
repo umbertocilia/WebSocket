@@ -1,0 +1,10 @@
+C:\Users\DAPHNE\source\repos\WebSocketApp\bin\Debug\WebSocketApp.exe.config
+C:\Users\DAPHNE\source\repos\WebSocketApp\bin\Debug\WebSocketApp.exe
+C:\Users\DAPHNE\source\repos\WebSocketApp\bin\Debug\WebSocketApp.pdb
+C:\Users\DAPHNE\source\repos\WebSocketApp\obj\Debug\WebSocketApp.csprojAssemblyReference.cache
+C:\Users\DAPHNE\source\repos\WebSocketApp\obj\Debug\WebSocketApp.Properties.Resources.resources
+C:\Users\DAPHNE\source\repos\WebSocketApp\obj\Debug\WebSocketApp.csproj.GenerateResource.cache
+C:\Users\DAPHNE\source\repos\WebSocketApp\obj\Debug\WebSocketApp.csproj.CoreCompileInputs.cache
+C:\Users\DAPHNE\source\repos\WebSocketApp\obj\Debug\WebSocketApp.exe
+C:\Users\DAPHNE\source\repos\WebSocketApp\obj\Debug\WebSocketApp.pdb
+C:\Users\DAPHNE\source\repos\WebSocketApp\obj\Debug\WebSocketApp.Form1.resources

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WemosWebSocket", "WemosWebSocket.csproj", "{2B1D5734-BE6B-47AB-8205-0D419B9DAD64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSocketApp", "..\WebSocketApp\WebSocketApp.csproj", "{B8E4427D-E0CE-4DB5-9754-AA79F3A9549A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B1D5734-BE6B-47AB-8205-0D419B9DAD64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B1D5734-BE6B-47AB-8205-0D419B9DAD64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B1D5734-BE6B-47AB-8205-0D419B9DAD64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B1D5734-BE6B-47AB-8205-0D419B9DAD64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8E4427D-E0CE-4DB5-9754-AA79F3A9549A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8E4427D-E0CE-4DB5-9754-AA79F3A9549A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8E4427D-E0CE-4DB5-9754-AA79F3A9549A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8E4427D-E0CE-4DB5-9754-AA79F3A9549A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D59274B1-9387-4783-831C-156324AAF9F3}
+	EndGlobalSection
+EndGlobal
