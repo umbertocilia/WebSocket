@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using WebSocketSharp;
 
 namespace WebSocketApp
 {
@@ -15,25 +16,19 @@ namespace WebSocketApp
     {
         public List<Led> ledList = new List<Led>();
         public int lumos = 200;
+        public WebSocket ws;
 
 
 
         public Form1()
         {
             InitializeComponent();
-
-            Random rnd = new Random();
-
+            InitializeLeds();
+            InizializeConnection();
             
-            for (int i = 0; i < 11; i++)
-            {
-                Color randomColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
-               
-                ledList.Add(new Led(0, 0, 0, (int)i,randomColor));
-
-            }
-
         }
+
+      
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
@@ -58,34 +53,39 @@ namespace WebSocketApp
 
             double angle = 0;
 
-            for (int i = 0; i < 11; i++)
-            {
-                //origine del led lungo la circonferenza 
-                X = Cx + (r * Math.Cos(angle));
-                Y = Cy + (r * Math.Sin(angle));
+            
 
 
-  
-                foreach (Led l  in ledList.Where(w => w.Number == i))
+                for (int i = 0; i < 12; i++)
                 {
-                    l.X = (int)X +( (int)ledDiameter/2);
-                    l.Y = (int)Y + ((int)ledDiameter/2);
-                    l.Radius = (int)ledDiameter / 2;
+                    //origine del led lungo la circonferenza 
+                    X = Cx + (r * Math.Cos(angle));
+                    Y = Cy + (r * Math.Sin(angle));
 
-                    Rectangle rect = new Rectangle((int)X,(int)Y, l.Radius*2, l.Radius*2);
 
-                    myBrush.Color = l.Color;
 
-                    formGraphics.FillEllipse(myBrush, rect);
+                    foreach (Led l in ledList.Where(w => w.Number == i))
+                    {
+                        l.X = (int)X + ((int)ledDiameter / 2);
+                        l.Y = (int)Y + ((int)ledDiameter / 2);
+                        l.Radius = (int)ledDiameter / 2;
+
+                        Rectangle rect = new Rectangle((int)X, (int)Y, l.Radius * 2, l.Radius * 2);
+
+                        myBrush.Color = l.Color;
+
+                        formGraphics.FillEllipse(myBrush, rect);
+
+                        SetColor(l,ws);
+
+                    }
+
+                    angle += delta;
+
 
                 }
 
-                angle += delta;
-
-
-            }
-
-
+            
             myBrush.Dispose();
             formGraphics.Dispose();
         }
@@ -105,7 +105,61 @@ namespace WebSocketApp
 
         }
 
+        public void InitializeLeds()
+        {
+            Random rnd = new Random();
 
+
+            for (int i = 0; i < 12; i++)
+            {
+                // Color randomColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
+
+                Color ledColor = Color.FromArgb(201, 91, 0);
+
+                ledList.Add(new Led(0, 0, 0, (int)i, ledColor));
+
+            }
+
+        }
+        public void InizializeConnection()
+        {
+            using (ws = new WebSocket("ws://192.168.137.235:81"))
+            {
+                ws.Connect();
+            }
+        }
+
+        public void SetColor(Led l ,WebSocket ws)
+        {
+            ws.Connect();
+
+            byte[] bytes = BitConverter.GetBytes(l.Color.ToArgb());
+            byte bVal = bytes[0];
+            byte gVal = bytes[1];
+            byte rVal = bytes[2];
+            byte aVal = bytes[3];
+
+
+            string led = "";
+            if (l.Number <= 9) { led = "0" + l.Number.ToString(); } 
+            else { led = l.Number.ToString(); }
+            string r = rVal.ToString().PadLeft(3, '0'); 
+            string g = gVal.ToString().PadLeft(3, '0'); 
+            string b = bVal.ToString().PadLeft(3, '0'); 
+            string lum = lumos.ToString().PadLeft(3, '0'); 
+
+
+            string result = "#" + led + r + g + b + lum;
+
+           
+            ws.Send(result);
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ws.Connect();
+            ws.Send("C");
+        }
     }
 
 
@@ -151,4 +205,6 @@ namespace WebSocketApp
         }
        
     }
+
+    
 }
