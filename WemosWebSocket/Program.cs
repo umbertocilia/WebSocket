@@ -11,14 +11,14 @@ namespace WemosWebSocket
         static void Main(string[] args)
         {
 
-            using (var ws = new WebSocket("ws://192.168.1.207:81"))
+            using (var ws = new WebSocket("ws://192.168.137.238:81"))
             {
                 ws.OnMessage += (sender, e) =>
                     Console.WriteLine("Laputa says: " + e.Data);
 
                 ws.Connect();
 
-                //Loop(ws);
+                Loop(ws);
                 
                 Random rnd = new Random();
 
@@ -40,12 +40,11 @@ namespace WemosWebSocket
                     ws.Send("C");
 
 
-                    ws.Send(result);
+                    //ws.Send(result);
 
 
-                    //Loop(ws);
 
-                    System.Threading.Thread.Sleep(1000);
+                    System.Threading.Thread.Sleep(100);
 
                 }
 

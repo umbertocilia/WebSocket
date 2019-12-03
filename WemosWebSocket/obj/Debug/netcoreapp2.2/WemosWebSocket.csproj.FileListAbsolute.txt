@@ -9,3 +9,13 @@ C:\Users\DAPHNE\source\repos\WemosWebSocket\obj\Debug\netcoreapp2.2\WemosWebSock
 C:\Users\DAPHNE\source\repos\WemosWebSocket\obj\Debug\netcoreapp2.2\WemosWebSocket.AssemblyInfo.cs
 C:\Users\DAPHNE\source\repos\WemosWebSocket\obj\Debug\netcoreapp2.2\WemosWebSocket.dll
 C:\Users\DAPHNE\source\repos\WemosWebSocket\obj\Debug\netcoreapp2.2\WemosWebSocket.pdb
+C:\Users\ucilia\Documents\CODE\WebSocket\WemosWebSocket\bin\Debug\netcoreapp2.2\WemosWebSocket.deps.json
+C:\Users\ucilia\Documents\CODE\WebSocket\WemosWebSocket\bin\Debug\netcoreapp2.2\WemosWebSocket.runtimeconfig.json
+C:\Users\ucilia\Documents\CODE\WebSocket\WemosWebSocket\bin\Debug\netcoreapp2.2\WemosWebSocket.runtimeconfig.dev.json
+C:\Users\ucilia\Documents\CODE\WebSocket\WemosWebSocket\bin\Debug\netcoreapp2.2\WemosWebSocket.dll
+C:\Users\ucilia\Documents\CODE\WebSocket\WemosWebSocket\bin\Debug\netcoreapp2.2\WemosWebSocket.pdb
+C:\Users\ucilia\Documents\CODE\WebSocket\WemosWebSocket\obj\Debug\netcoreapp2.2\WemosWebSocket.csprojAssemblyReference.cache
+C:\Users\ucilia\Documents\CODE\WebSocket\WemosWebSocket\obj\Debug\netcoreapp2.2\WemosWebSocket.AssemblyInfoInputs.cache
+C:\Users\ucilia\Documents\CODE\WebSocket\WemosWebSocket\obj\Debug\netcoreapp2.2\WemosWebSocket.AssemblyInfo.cs
+C:\Users\ucilia\Documents\CODE\WebSocket\WemosWebSocket\obj\Debug\netcoreapp2.2\WemosWebSocket.dll
+C:\Users\ucilia\Documents\CODE\WebSocket\WemosWebSocket\obj\Debug\netcoreapp2.2\WemosWebSocket.pdb
