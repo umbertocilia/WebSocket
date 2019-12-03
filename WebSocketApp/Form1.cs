@@ -72,7 +72,7 @@ namespace WebSocketApp
 
                         Rectangle rect = new Rectangle((int)X, (int)Y, l.Radius * 2, l.Radius * 2);
 
-                        myBrush.Color = l.Color;
+                        myBrush.Color = l.GetColor();
 
                         formGraphics.FillEllipse(myBrush, rect);
 
@@ -99,7 +99,17 @@ namespace WebSocketApp
                 selected = l.IsPointInside(e.Location.X, e.Location.Y);
 
                 if (selected != null){
-                    MessageBox.Show(selected.Number.ToString());
+
+                    if (selected.IsOn)
+                    {
+                        selected.TurnOff();
+                        this.Invalidate();
+                    }
+                    else
+                    {
+                        selected.TurnOn();
+                        this.Invalidate();
+                    }
                 }
             }
 
@@ -123,7 +133,7 @@ namespace WebSocketApp
         }
         public void InizializeConnection()
         {
-            using (ws = new WebSocket("ws://192.168.137.235:81"))
+            using (ws = new WebSocket("ws://172.20.0.68:81"))
             {
                 ws.Connect();
             }
@@ -133,7 +143,7 @@ namespace WebSocketApp
         {
             ws.Connect();
 
-            byte[] bytes = BitConverter.GetBytes(l.Color.ToArgb());
+            byte[] bytes = BitConverter.GetBytes(l.GetColor().ToArgb());
             byte bVal = bytes[0];
             byte gVal = bytes[1];
             byte rVal = bytes[2];
@@ -179,6 +189,10 @@ namespace WebSocketApp
         
         private Color _color;
         public Color Color { get => _color; set => _color = value; }
+       
+        private bool _IsOn;
+        public bool IsOn { get => _IsOn; set => _IsOn = value; }
+
 
 
 
@@ -190,7 +204,30 @@ namespace WebSocketApp
             this.Radius = radius;
             this.Number = n;
             this.Color = c;
+            this.IsOn = true;
         }
+
+
+        public Color GetColor()
+        {
+            if (this.IsOn)
+            {
+                return this.Color;
+            }
+            else { return System.Drawing.Color.Black; }
+        }
+
+
+        public void TurnOn()
+        {
+            this.IsOn = true;
+        }
+
+        public void TurnOff()
+        {
+            this.IsOn = false;
+        }
+
 
         public Led IsPointInside(int x, int y)
         {
