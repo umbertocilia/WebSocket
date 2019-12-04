@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,18 +18,27 @@ namespace WebSocketApp
         public List<Led> ledList = new List<Led>();
         public int lumos = 200;
         public WebSocket ws;
-
+        public TextWriter _writer = null;
+        public Boolean trasmetti = false;
 
 
         public Form1()
         {
             InitializeComponent();
             InitializeLeds();
+            InitializeConsole();
             InizializeConnection();
-            
         }
 
-      
+        private void InitializeConsole()
+        {
+            // Instantiate the writer
+            _writer = new TextBoxStreamWriter(txtConsole);
+            // Redirect the out Console stream
+            Console.SetOut(_writer);
+            Console.WriteLine("Booting ....");
+
+        }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
@@ -76,7 +86,8 @@ namespace WebSocketApp
 
                         formGraphics.FillEllipse(myBrush, rect);
 
-                        SetColor(l,ws);
+                        if (trasmetti) { SetColor(l, ws); }
+                       
 
                     }
 
@@ -133,11 +144,16 @@ namespace WebSocketApp
         }
         public void InizializeConnection()
         {
-            using (ws = new WebSocket("ws://172.20.0.68:81"))
+            using (ws = new WebSocket("ws://192.168.137.240:81"))
             {
-                ws.Connect();
+
+                    Console.WriteLine("Connessione a 192.168.137.240");
+                    ws.Connect();
+                   
             }
         }
+
+        
 
         public void SetColor(Led l ,WebSocket ws)
         {
@@ -161,14 +177,31 @@ namespace WebSocketApp
 
             string result = "#" + led + r + g + b + lum;
 
-           
+            Console.WriteLine("Send: " + result);
             ws.Send(result);
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            ws.Connect();
-            ws.Send("C");
+            if (trasmetti)
+            {
+                ws.Connect();
+                ws.Send("C");
+            }
+        }
+
+        private void btnTrasmetti_Click(object sender, EventArgs e)
+        {
+            if (trasmetti)
+            {
+                btnTrasmetti.BackColor = Color.LightCoral;
+                trasmetti = false;
+            }
+            else
+            {
+                btnTrasmetti.BackColor = Color.LightGreen;
+                trasmetti = true;
+            }
         }
     }
 
@@ -204,7 +237,7 @@ namespace WebSocketApp
             this.Radius = radius;
             this.Number = n;
             this.Color = c;
-            this.IsOn = true;
+            this.IsOn = false;
         }
 
 

@@ -2,6 +2,27 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.2": {
+      "ConsoleControl/1.2.1": {
+        "type": "package",
+        "dependencies": {
+          "ConsoleControlAPI": "1.2.1"
+        },
+        "compile": {
+          "lib/net40-client/ConsoleControl.dll": {}
+        },
+        "runtime": {
+          "lib/net40-client/ConsoleControl.dll": {}
+        }
+      },
+      "ConsoleControlAPI/1.2.1": {
+        "type": "package",
+        "compile": {
+          "lib/net40/ConsoleControlAPI.dll": {}
+        },
+        "runtime": {
+          "lib/net40/ConsoleControlAPI.dll": {}
+        }
+      },
       "Microsoft.NETCore.App/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -220,6 +241,33 @@
     }
   },
   "libraries": {
+    "ConsoleControl/1.2.1": {
+      "sha512": "D+dHs6gBEv07T5rcfmZBfvC9tOIkcGDEkdHWd7msnJh2ho7UBKthrPTB2ntlWM61QM1UtO8r1aeGARf68fB/jg==",
+      "type": "package",
+      "path": "consolecontrol/1.2.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "consolecontrol.1.2.1.nupkg.sha512",
+        "consolecontrol.nuspec",
+        "content/Console.ico",
+        "lib/net40-client/ConsoleControl.dll",
+        "lib/net40-client/ConsoleControl.xml"
+      ]
+    },
+    "ConsoleControlAPI/1.2.1": {
+      "sha512": "f7Qfae1uXJ74BorMHvP42pplQReXh5qqbkFjAFmrjmkKF3SYSgF0QwzTEEtWpgZubJ2zAefK4U0NHxa6gxArUw==",
+      "type": "package",
+      "path": "consolecontrolapi/1.2.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "consolecontrolapi.1.2.1.nupkg.sha512",
+        "consolecontrolapi.nuspec",
+        "lib/net40/ConsoleControlAPI.dll",
+        "lib/net40/ConsoleControlAPI.xml"
+      ]
+    },
     "Microsoft.NETCore.App/2.2.0": {
       "sha512": "7z5l8Jp324S8bU8+yyWeYHXUFYvKyiI5lqS1dXgTzOx1H69Qbf6df12kCKlNX45LpMfCMd4U3M6p7Rl5Zk7SLA==",
       "type": "package",
@@ -704,6 +752,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
+      "ConsoleControl >= 1.2.1",
       "Microsoft.NETCore.App >= 2.2.0",
       "WebSocketSharp >= 1.0.3-rc11"
     ]
@@ -752,6 +801,10 @@
     "frameworks": {
       "netcoreapp2.2": {
         "dependencies": {
+          "ConsoleControl": {
+            "target": "Package",
+            "version": "[1.2.1, )"
+          },
           "Microsoft.NETCore.App": {
             "suppressParent": "All",
             "target": "Package",
@@ -778,6 +831,26 @@
     }
   },
   "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Il pacchetto 'ConsoleControl 1.2.1' è stato ripristinato mediante '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' e non mediante il framework di destinazione del progetto '.NETCoreApp,Version=v2.2'. Questo pacchetto potrebbe non essere completamente compatibile con il progetto.",
+      "libraryId": "ConsoleControl",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.2"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Il pacchetto 'ConsoleControlAPI 1.2.1' è stato ripristinato mediante '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' e non mediante il framework di destinazione del progetto '.NETCoreApp,Version=v2.2'. Questo pacchetto potrebbe non essere completamente compatibile con il progetto.",
+      "libraryId": "ConsoleControlAPI",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v2.2"
+      ]
+    },
     {
       "code": "NU1701",
       "level": "Warning",

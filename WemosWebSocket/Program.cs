@@ -11,7 +11,7 @@ namespace WemosWebSocket
         static void Main(string[] args)
         {
 
-            using (var ws = new WebSocket("ws://172.20.0.68:81"))
+            using (var ws = new WebSocket("ws://192.168.137.240:81"))
             {
                 ws.OnMessage += (sender, e) =>
                     Console.WriteLine("Laputa says: " + e.Data);
