@@ -6,10 +6,12 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using WebSocketSharp;
+using System.Net;
 
 namespace WebSocketApp
 {
@@ -19,7 +21,15 @@ namespace WebSocketApp
         public int lumos = 200;
         public WebSocket ws;
         public TextWriter _writer = null;
-        public Boolean trasmetti = false;
+        public Boolean trasmetti = true;
+        Object lockObj = new object();
+        Queue<Led> queue;
+        String wemosIp = "";
+        Thread t1;
+
+        Consumer c1;
+
+
 
 
         public Form1()
@@ -49,8 +59,8 @@ namespace WebSocketApp
             System.Drawing.Graphics formGraphics;
             formGraphics = this.CreateGraphics();
 
-            double Cx =  ringPanel.Location.X;
-            double Cy =  ringPanel.Location.Y;
+            double Cx = ringPanel.Location.X;
+            double Cy = ringPanel.Location.Y;
 
             double X = 0;
             double Y = 0;
@@ -59,44 +69,53 @@ namespace WebSocketApp
 
             double r = 100;
 
-            double delta = (2 * Math.PI) / 11;
+            double delta = (2 * Math.PI) / 12;
 
             double angle = 0;
 
-            
+            int shift = (int)r + (int)ledDiameter / 2;
+
+            Rectangle rect = new Rectangle((int)Cx - shift, (int)Cy - shift, 250, 250);
 
 
-                for (int i = 0; i < 12; i++)
+            myBrush.Color = Color.Black;
+            formGraphics.DrawEllipse(new Pen(myBrush, 4), rect);
+            myBrush.Color = Color.DarkGray;
+            formGraphics.FillEllipse(myBrush, rect);
+
+            for (int i = 0; i < 12; i++)
+            {
+                //origine del led lungo la circonferenza 
+                X = Cx + (r * Math.Cos(angle));
+                Y = Cy + (r * Math.Sin(angle));
+
+
+
+                foreach (Led l in ledList.Where(w => w.Number == i))
                 {
-                    //origine del led lungo la circonferenza 
-                    X = Cx + (r * Math.Cos(angle));
-                    Y = Cy + (r * Math.Sin(angle));
+                    l.X = (int)X + ((int)ledDiameter / 2);
+                    l.Y = (int)Y + ((int)ledDiameter / 2);
+                    l.Radius = (int)ledDiameter / 2;
 
+                    rect = new Rectangle((int)X, (int)Y, l.Radius * 2, l.Radius * 2);
 
+                    myBrush.Color = Color.Black;
+                    formGraphics.DrawEllipse(new Pen(myBrush, 4), rect);
 
-                    foreach (Led l in ledList.Where(w => w.Number == i))
+                    myBrush.Color = l.GetColor();
+                    formGraphics.FillEllipse(myBrush, rect);
+
+                    if (trasmetti)
                     {
-                        l.X = (int)X + ((int)ledDiameter / 2);
-                        l.Y = (int)Y + ((int)ledDiameter / 2);
-                        l.Radius = (int)ledDiameter / 2;
-
-                        Rectangle rect = new Rectangle((int)X, (int)Y, l.Radius * 2, l.Radius * 2);
-
-                        myBrush.Color = l.GetColor();
-
-                        formGraphics.FillEllipse(myBrush, rect);
-
-                        if (trasmetti) { SetColor(l, ws); }
-                       
-
+                        queue.Enqueue(l);
                     }
-
-                    angle += delta;
-
 
                 }
 
-            
+                angle += delta;
+            }
+
+
             myBrush.Dispose();
             formGraphics.Dispose();
         }
@@ -109,7 +128,13 @@ namespace WebSocketApp
             {
                 selected = l.IsPointInside(e.Location.X, e.Location.Y);
 
-                if (selected != null){
+                if (selected != null)
+                {
+
+                    if (colorDialog1.ShowDialog() == DialogResult.OK)
+                    {
+                        selected.Color = colorDialog1.Color;
+                    }
 
                     if (selected.IsOn)
                     {
@@ -135,7 +160,7 @@ namespace WebSocketApp
             {
                 // Color randomColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
 
-                Color ledColor = Color.FromArgb(201, 91, 0);
+                Color ledColor = Color.FromArgb(0, 0, 0);
 
                 ledList.Add(new Led(0, 0, 0, (int)i, ledColor));
 
@@ -144,42 +169,46 @@ namespace WebSocketApp
         }
         public void InizializeConnection()
         {
-            using (ws = new WebSocket("ws://192.168.137.240:81"))
+
+            wemosIp = DoGetHostAddresses("ESP8266");
+
+            using (ws = new WebSocket("ws://" + wemosIp + ":81"))
             {
 
-                    Console.WriteLine("Connessione a 192.168.137.240");
-                    ws.Connect();
-                   
+                Console.WriteLine("Connessione a " + wemosIp);
+                ws.Connect();
+
             }
         }
 
-        
 
-        public void SetColor(Led l ,WebSocket ws)
+
+        public string DoGetHostAddresses(string hostname)
         {
-            ws.Connect();
+            IPAddress[] ips;
 
-            byte[] bytes = BitConverter.GetBytes(l.GetColor().ToArgb());
-            byte bVal = bytes[0];
-            byte gVal = bytes[1];
-            byte rVal = bytes[2];
-            byte aVal = bytes[3];
-
-
-            string led = "";
-            if (l.Number <= 9) { led = "0" + l.Number.ToString(); } 
-            else { led = l.Number.ToString(); }
-            string r = rVal.ToString().PadLeft(3, '0'); 
-            string g = gVal.ToString().PadLeft(3, '0'); 
-            string b = bVal.ToString().PadLeft(3, '0'); 
-            string lum = lumos.ToString().PadLeft(3, '0'); 
+            do
+            {
+                Console.WriteLine("Ricerca IP ESP");
+                ips = Dns.GetHostAddresses(hostname);
+            }
+            while (ips.Count() == 0);
 
 
-            string result = "#" + led + r + g + b + lum;
+            if (ips.Count() > 0)
+            {
+                Console.WriteLine("IP trovato: " + ips[0].ToString());
+                string IPV4Address = ips[0].ToString();
+                return IPV4Address;
+            }
+            else
+            {
+                return null;
+            }
 
-            Console.WriteLine("Send: " + result);
-            ws.Send(result);
         }
+
+
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -188,6 +217,10 @@ namespace WebSocketApp
                 ws.Connect();
                 ws.Send("C");
             }
+
+            t1.Abort();
+
+
         }
 
         private void btnTrasmetti_Click(object sender, EventArgs e)
@@ -196,35 +229,119 @@ namespace WebSocketApp
             {
                 btnTrasmetti.BackColor = Color.LightCoral;
                 trasmetti = false;
+                Console.WriteLine("Trasmissione disattiva");
             }
             else
             {
                 btnTrasmetti.BackColor = Color.LightGreen;
                 trasmetti = true;
+                Console.WriteLine("Trasmissione attiva");
             }
         }
-    }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            queue = new Queue<Led>();
+            c1 = new Consumer(queue, lockObj, ws);
+            t1 = new Thread(c1.consume);
+            t1.Start();
+        }
+
+        private void Form1_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+
+            Led selected = null;
+
+            switch (e.Button)
+            {
+
+                case MouseButtons.Left:
+
+                    selected = null;
+                    foreach (Led l in ledList)
+                    {
+                        selected = l.IsPointInside(e.Location.X, e.Location.Y);
+
+                        if (selected != null)
+                        {
+
+                            if (colorDialog1.ShowDialog() == DialogResult.OK)
+                            {
+                                selected.Color = colorDialog1.Color;
+                                this.Invalidate();
+                            }
+
+                        }
+                    }
+                    // Left click
+                    break;
+
+                case MouseButtons.Right:
+                    selected = null;
+
+                    foreach (Led l in ledList)
+                    {
+                        selected = l.IsPointInside(e.Location.X, e.Location.Y);
+
+                        if (selected != null)
+                        {
+
+                            contextMenuStrip1.Show();
+
+                        }
+                    }
+                    // Left click
+                    break;
+
+            }
+        }
+
+
+    }
 
     public class Led
     {
         private int _x;
-        public int X { get => _x; set => _x = value; }
+        public int X
+        {
+            get => _x;
+            set => _x = value;
+        }
 
         private int _y;
-        public int Y { get => _y; set => _y = value; }
+        public int Y
+        {
+            get => _y;
+            set => _y = value;
+        }
 
         private int _radius;
-        public int Radius { get => _radius; set => _radius = value; }
+        public int Radius
+        {
+            get => _radius;
+            set => _radius = value;
+        }
 
         private int _number;
-        public int Number { get => _number; set => _number = value; }
-        
+        public int Number
+        {
+            get => _number;
+            set => _number = value;
+        }
+
         private Color _color;
-        public Color Color { get => _color; set => _color = value; }
-       
+        public Color Color
+        {
+            get => _color;
+            set => _color = value;
+        }
+
         private bool _IsOn;
-        public bool IsOn { get => _IsOn; set => _IsOn = value; }
+        public bool IsOn
+        {
+            get => _IsOn;
+            set => _IsOn = value;
+        }
 
 
 
@@ -237,7 +354,7 @@ namespace WebSocketApp
             this.Radius = radius;
             this.Number = n;
             this.Color = c;
-            this.IsOn = false;
+            this.IsOn = true;
         }
 
 
@@ -247,7 +364,10 @@ namespace WebSocketApp
             {
                 return this.Color;
             }
-            else { return System.Drawing.Color.Black; }
+            else
+            {
+                return System.Drawing.Color.Black;
+            }
         }
 
 
@@ -264,17 +384,17 @@ namespace WebSocketApp
 
         public Led IsPointInside(int x, int y)
         {
-            Led selectedLed = null; 
+            Led selectedLed = null;
 
-            if ( Math.Pow(this.X - x, 2) + Math.Pow(this.Y - y, 2)  <= this.Radius * this.Radius )
+            if (Math.Pow(this.X - x, 2) + Math.Pow(this.Y - y, 2) <= this.Radius * this.Radius)
             {
                 selectedLed = this;
             }
 
             return selectedLed;
         }
-       
+
     }
 
-    
+
 }

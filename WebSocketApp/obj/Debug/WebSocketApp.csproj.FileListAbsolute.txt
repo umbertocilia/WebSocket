@@ -19,3 +19,15 @@ C:\Users\ucilia\Documents\CODE\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.exe
 C:\Users\ucilia\Documents\CODE\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.pdb
 C:\Users\ucilia\Documents\CODE\WebSocket\WebSocketApp\bin\Debug\websocket-sharp-core.dll
 C:\Users\ucilia\Documents\CODE\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.csproj.CopyComplete
+C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\bin\Debug\WebSocketApp.exe.config
+C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\bin\Debug\WebSocketApp.exe
+C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\bin\Debug\WebSocketApp.pdb
+C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\bin\Debug\websocket-sharp-core.dll
+C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.csprojAssemblyReference.cache
+C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.Form1.resources
+C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.Properties.Resources.resources
+C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.csproj.GenerateResource.cache
+C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.csproj.CoreCompileInputs.cache
+C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.csproj.CopyComplete
+C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.exe
+C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.pdb
