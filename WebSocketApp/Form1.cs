@@ -31,13 +31,13 @@ namespace WebSocketApp
 
 
 
-
         public Form1()
         {
             InitializeComponent();
             InitializeLeds();
             InitializeConsole();
             InizializeConnection();
+            
         }
 
         private void InitializeConsole()
@@ -47,6 +47,7 @@ namespace WebSocketApp
             // Redirect the out Console stream
             Console.SetOut(_writer);
             Console.WriteLine("Booting ....");
+
 
         }
 
@@ -178,6 +179,10 @@ namespace WebSocketApp
                 Console.WriteLine("Connessione a " + wemosIp);
                 ws.Connect();
 
+                ws.OnMessage += (sender, e) => {
+                    Console.WriteLine(e.Data);
+                };
+
             }
         }
 
@@ -296,6 +301,8 @@ namespace WebSocketApp
             }
         }
 
+
+       
 
     }
 
