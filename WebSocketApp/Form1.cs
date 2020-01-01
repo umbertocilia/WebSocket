@@ -18,7 +18,6 @@ namespace WebSocketApp
     public partial class Form1 : Form
     {
         public List<Led> ledList = new List<Led>();
-        public int lumos = 200;
         public WebSocket ws;
         public TextWriter _writer = null;
         public Boolean trasmetti = true;
@@ -163,7 +162,7 @@ namespace WebSocketApp
 
                 Color ledColor = Color.FromArgb(0, 0, 0);
 
-                ledList.Add(new Led(0, 0, 0, (int)i, ledColor));
+                ledList.Add(new Led(0, 0, 0, (int)i, ledColor, 100));
 
             }
 
@@ -180,7 +179,7 @@ namespace WebSocketApp
                 ws.Connect();
 
                 ws.OnMessage += (sender, e) => {
-                    Console.WriteLine(e.Data);
+                    MessageBox.Show(e.Data);
                 };
 
             }
@@ -302,8 +301,101 @@ namespace WebSocketApp
         }
 
 
-       
+        private void EffectA()
+        {
+            for(int i = 0; i < 6; i++) {
 
+                foreach (Led l in ledList)
+                {
+               
+                    l.Color = Color.Red;
+                    Thread.Sleep(100);
+                    queue.Enqueue(l);
+                }
+
+                foreach (Led l in ledList)
+                {
+                    l.Color = Color.Black;
+                    Thread.Sleep(100);
+                    queue.Enqueue(l);
+                }
+            }
+        }
+
+
+        private void EffectB()
+        {
+            int selected = 0;
+            for (double i = 0; i < 1; i += 0.001)
+            {
+
+                ledList[(selected + 1) % 12].Color = ColorFromHSL(i, 0.5, 0.5,10);
+                ledList[(selected + 2) % 12].Color   =  ColorFromHSL(i, 0.5, 0.5,10);
+                ledList[(selected + 3) % 12].Color = ColorFromHSL(i, 0.5, 0.5,10);
+                queue.Enqueue(ledList[(selected + 3) % 12]);
+                Thread.Sleep(2);
+                queue.Enqueue(ledList[(selected + 2) % 12]);
+                Thread.Sleep(2);
+                queue.Enqueue(ledList[(selected + 1) % 12]);
+                Thread.Sleep(2);
+                selected++;
+            }
+        }
+
+        public static Color ColorFromHSL(double h, double s, double l, int minFactor)
+        {
+            double r = 0, g = 0, b = 0;
+            if (l != 0)
+            {
+                if (s == 0)
+                    r = g = b = l;
+                else
+                {
+                    double temp2;
+                    if (l < 0.5)
+                        temp2 = l * (1.0 + s);
+                    else
+                        temp2 = l + s - (l * s);
+
+                    double temp1 = 2.0 * l - temp2;
+
+                    r = GetColorComponent(temp1, temp2, h + 1.0 / 3.0);
+                    g = GetColorComponent(temp1, temp2, h);
+                    b = GetColorComponent(temp1, temp2, h - 1.0 / 3.0);
+                }
+            }
+            return Color.FromArgb((int)(255 * r)- minFactor, (int)(255 * g) - minFactor, (int)(255 * b) - minFactor);
+
+        }
+
+        private static double GetColorComponent(double temp1, double temp2, double temp3)
+        {
+            if (temp3 < 0.0)
+                temp3 += 1.0;
+            else if (temp3 > 1.0)
+                temp3 -= 1.0;
+
+            if (temp3 < 1.0 / 6.0)
+                return temp1 + (temp2 - temp1) * 6.0 * temp3;
+            else if (temp3 < 0.5)
+                return temp2;
+            else if (temp3 < 2.0 / 3.0)
+                return temp1 + ((temp2 - temp1) * ((2.0 / 3.0) - temp3) * 6.0);
+            else
+                return temp1;
+        }
+
+
+
+
+
+
+        private void BtnAmbiente_Click(object sender, EventArgs e)
+        {
+            ws.Connect();
+            Thread t2 = new Thread(EffectB);
+            t2.Start();
+        }
     }
 
     public class Led
@@ -321,6 +413,13 @@ namespace WebSocketApp
             get => _y;
             set => _y = value;
         }
+
+        private int _lumos;
+        public int Lumos {
+            get => _lumos;
+            set => _lumos = value;
+        }
+
 
         private int _radius;
         public int Radius
@@ -349,12 +448,9 @@ namespace WebSocketApp
             get => _IsOn;
             set => _IsOn = value;
         }
+        
 
-
-
-
-
-        public Led(int x, int y, int radius, int n, Color c)
+        public Led(int x, int y, int radius, int n, Color c, int lumos)
         {
             this.X = x;
             this.Y = y;
@@ -362,6 +458,7 @@ namespace WebSocketApp
             this.Number = n;
             this.Color = c;
             this.IsOn = true;
+            this.Lumos = lumos;
         }
 
 

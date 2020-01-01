@@ -39,6 +39,7 @@
             this.ledToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spegniToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accendiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnAmbiente = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -54,6 +55,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.Controls.Add(this.btnAmbiente);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.btnTrasmetti);
             this.panel1.Controls.Add(this.txtConsole);
@@ -115,14 +117,27 @@
             // spegniToolStripMenuItem
             // 
             this.spegniToolStripMenuItem.Name = "spegniToolStripMenuItem";
-            this.spegniToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.spegniToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.spegniToolStripMenuItem.Text = "Spegni";
             // 
             // accendiToolStripMenuItem
             // 
             this.accendiToolStripMenuItem.Name = "accendiToolStripMenuItem";
-            this.accendiToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.accendiToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.accendiToolStripMenuItem.Text = "Accendi";
+            // 
+            // btnAmbiente
+            // 
+            this.btnAmbiente.BackColor = System.Drawing.Color.Coral;
+            this.btnAmbiente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAmbiente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAmbiente.Location = new System.Drawing.Point(195, 330);
+            this.btnAmbiente.Name = "btnAmbiente";
+            this.btnAmbiente.Size = new System.Drawing.Size(126, 29);
+            this.btnAmbiente.TabIndex = 3;
+            this.btnAmbiente.Text = "Dati Ambiente";
+            this.btnAmbiente.UseVisualStyleBackColor = false;
+            this.btnAmbiente.Click += new System.EventHandler(this.BtnAmbiente_Click);
             // 
             // Form1
             // 
@@ -159,6 +174,7 @@
         private System.Windows.Forms.ToolStripMenuItem ledToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem spegniToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem accendiToolStripMenuItem;
+        private System.Windows.Forms.Button btnAmbiente;
     }
 }
 

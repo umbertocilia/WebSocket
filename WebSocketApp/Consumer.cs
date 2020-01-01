@@ -13,7 +13,6 @@ namespace WebSocketApp
         Queue<Led> queue;
         Object lockObject;
         WebSocketSharp.WebSocket ws;
-        int lumos = 200;
         public Consumer(Queue<Led> queue, Object lockObject, WebSocketSharp.WebSocket ws)
         {
             this.queue = queue;
@@ -23,6 +22,7 @@ namespace WebSocketApp
 
         public void consume()
         {
+            ws.Connect();
             while (true)
             {
                 lock (lockObject)
@@ -31,7 +31,7 @@ namespace WebSocketApp
                     {
                         continue;
                     }
-
+                    
                     SetColor(queue.Dequeue(), ws);
                 }
             }
@@ -39,7 +39,8 @@ namespace WebSocketApp
 
         public void SetColor(Led l, WebSocket ws)
         {
-            ws.Connect();
+            
+            if(l != null) { 
 
             byte[] bytes = BitConverter.GetBytes(l.GetColor().ToArgb());
             byte bVal = bytes[0];
@@ -54,12 +55,14 @@ namespace WebSocketApp
             string r = rVal.ToString().PadLeft(3, '0');
             string g = gVal.ToString().PadLeft(3, '0');
             string b = bVal.ToString().PadLeft(3, '0');
-            string lum = lumos.ToString().PadLeft(3, '0');
+            string lum = l.Lumos.ToString().PadLeft(3, '0');
 
 
             string result = "#" + led + r + g + b + lum;
 
             ws.Send(result);
+
+            }
         }
     }
 }
