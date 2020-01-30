@@ -7,54 +7,27 @@
 #include <SPI.h>
 #include <Wire.h>
 #include <SD.h>
+#include <DisplayUI.h>
+#include <Tasker.h>
+
+
 
 ESP8266WiFiMulti wifiMulti; 
-WebSocketsServer webSocket(81);  
-
-#define OLED_RESET 0  // GPIO0
-Adafruit_SSD1306 display(OLED_RESET);
-
+WebSocketsServer webSocket(81);
+DisplayUI UI; 
+Tasker tasker; 
 
 const char *ssid = "ESP8266"; // The name of the Wi-Fi network that will be created
 const char *password = "123456";   // The password required to connect to it, leave blank for an open network
 
-
 const char* mdnsName = "esp8266"; // Domain name for the mDNS responder
 
-
-
-
-class DisplayUI {
-  private:
-    Adafruit_SSD1306 display;
-  public:
-    DisplayUI(Adafruit_SSD1306 display) {
-      this->display = display;
-      this->display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-      this->display.clearDisplay();    
-    }
-    
-
-    void ShowMessage(String message) {
-      this->display.setTextSize(1);
-      this->display.setTextColor(WHITE);
-      this->display.setCursor(0,0);
-      this->display.println(message);
-      this->display.display();
-      }
-
-    void Clear() {
-      this->display.clearDisplay();
-      }
-
-
-    };
-
-
-DisplayUI UI = DisplayUI(display);
-
-
-/*__________________________________________________________SETUP__________________________________________________________*/
+String ipToString(IPAddress ip){
+  String s="";
+  for (int i=0; i<4; i++)
+    s += i  ? "." + String(ip[i]) : String(ip[i]);
+  return s;
+}
 
 void startWiFi() { // Start a Wi-Fi access point, and try to connect to some given access points. Then wait for either an AP or STA connection
   WiFi.softAP(ssid, password);             // Start the access point
@@ -70,21 +43,23 @@ void startWiFi() { // Start a Wi-Fi access point, and try to connect to some giv
 
   Serial.println("Connecting");
   UI.Clear();
-  UI.ShowMessage("Connecting");
+  UI.ShowMessage("Connetting");
 
   while (wifiMulti.run() != WL_CONNECTED && WiFi.softAPgetStationNum() < 1) {  // Wait for the Wi-Fi to connect
     delay(250);
     Serial.print('.');
   }
 
-  
-
   Serial.println("\r\n");
   if(WiFi.softAPgetStationNum() == 0) {      // If the ESP is connected to an AP
     Serial.print("Connected to ");
 
     UI.Clear();
-    UI.ShowMessage("COnnected");
+    UI.ShowMessage(ipToString(WiFi.localIP()));
+    delay(2000);
+    UI.Send();
+    delay(2000);
+    UI.Reiceve();
 
     Serial.println(WiFi.SSID());             // Tell us what network we're connected to
     Serial.print("IP address:\t");
