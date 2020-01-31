@@ -56,10 +56,7 @@ void startWiFi() { // Start a Wi-Fi access point, and try to connect to some giv
 
     UI.Clear();
     UI.ShowMessage(ipToString(WiFi.localIP()));
-    delay(2000);
-    UI.Send();
-    delay(2000);
-    UI.Reiceve();
+    UI.DrawBottomGrid();
 
     Serial.println(WiFi.SSID());             // Tell us what network we're connected to
     Serial.print("IP address:\t");
@@ -156,5 +153,6 @@ unsigned long prevMillis = millis();
 
 void loop() {
   webSocket.loop();                           // constantly check for websocket events
+  UI.DrawBottomGrid();
 }
 

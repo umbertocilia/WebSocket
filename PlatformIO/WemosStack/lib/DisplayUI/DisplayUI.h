@@ -15,6 +15,7 @@ class DisplayUI {
     void Clear();
     void Reiceve();
     void Send();
+    void DrawBottomGrid();
 
     };
 
