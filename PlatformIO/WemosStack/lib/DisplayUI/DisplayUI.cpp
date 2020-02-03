@@ -43,30 +43,20 @@
     void DisplayUI::DrawBottomGrid(){
       this->display.drawLine(0, 41, 64, 41 , WHITE);
       this->display.drawLine(0, 47, 64, 47 , WHITE);
+
       for(int i = 0; i<=64; i+=7){
         this->display.drawLine(i, 42, i, 48 , WHITE);
       }
 
-       for(int j = 0; j<=64; j+=7){
-         this->display.fillRect(j+3, 43, 2, 2 , WHITE);
-         
-         this->display.display();
-         delay(200);
-
-          for(int j = 0; j<=64; j+=7){
-            this->display.fillRect(j+3, 43, 2, 2 , BLACK);
-            
-          }
-          this->display.display();
-
+      for(int j = 0; j<=64; j+=7){
+        this->display.fillRect(j+3, 43, 2, 2 , WHITE);
+        this->display.display();
+        for(int j = 0; j<=64; j+=7){
+            this->display.fillRect(j+3, 43, 2, 2 , BLACK); 
+        }
+        this->display.display();
       }
-
-       for(int j = 0; j<=64; j+=7){
-         this->display.fillRect(j+3, 43, 2, 2 , BLACK);
-         this->display.display();
-      }
-
-
+      
       this->display.display();
     }
    

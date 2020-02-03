@@ -8,6 +8,7 @@
 class DisplayUI {
   private:
     Adafruit_SSD1306 display;
+    int point = 0;
   public:
     DisplayUI();
     

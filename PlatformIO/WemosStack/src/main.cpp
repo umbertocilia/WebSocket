@@ -131,7 +131,9 @@ void startWebSocket() { // Start a WebSocket server
   Serial.println("WebSocket server started.");
 }
 
-
+void ProgressBarTask(){
+  UI.DrawBottomGrid();
+}
 
 void setup() {
 
@@ -141,7 +143,7 @@ void setup() {
 
   startWiFi();
   startWebSocket(); 
-
+  tasker.setInterval(ProgressBarTask, 2000);
    
    
           
@@ -153,6 +155,6 @@ unsigned long prevMillis = millis();
 
 void loop() {
   webSocket.loop();                           // constantly check for websocket events
-  UI.DrawBottomGrid();
+  tasker.loop();
 }
 
