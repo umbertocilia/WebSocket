@@ -814,10 +814,16 @@
           }
         },
         "imports": [
-          "net461"
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
         ],
         "assetTargetFallback": true,
-        "warn": true
+        "warn": true,
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
       }
     }
   },
@@ -826,7 +832,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Il pacchetto 'ConsoleControl 1.2.1' è stato ripristinato mediante '.NETFramework,Version=v4.6.1' e non mediante il framework di destinazione del progetto '.NETCoreApp,Version=v2.2'. Questo pacchetto potrebbe non essere completamente compatibile con il progetto.",
+      "message": "Il pacchetto 'ConsoleControl 1.2.1' è stato ripristinato mediante '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' e non mediante il framework di destinazione del progetto '.NETCoreApp,Version=v2.2'. Questo pacchetto potrebbe non essere completamente compatibile con il progetto.",
       "libraryId": "ConsoleControl",
       "targetGraphs": [
         ".NETCoreApp,Version=v2.2"
@@ -836,7 +842,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Il pacchetto 'ConsoleControlAPI 1.2.1' è stato ripristinato mediante '.NETFramework,Version=v4.6.1' e non mediante il framework di destinazione del progetto '.NETCoreApp,Version=v2.2'. Questo pacchetto potrebbe non essere completamente compatibile con il progetto.",
+      "message": "Il pacchetto 'ConsoleControlAPI 1.2.1' è stato ripristinato mediante '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' e non mediante il framework di destinazione del progetto '.NETCoreApp,Version=v2.2'. Questo pacchetto potrebbe non essere completamente compatibile con il progetto.",
       "libraryId": "ConsoleControlAPI",
       "targetGraphs": [
         ".NETCoreApp,Version=v2.2"
@@ -846,7 +852,7 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Il pacchetto 'WebSocketSharp 1.0.3-rc11' è stato ripristinato mediante '.NETFramework,Version=v4.6.1' e non mediante il framework di destinazione del progetto '.NETCoreApp,Version=v2.2'. Questo pacchetto potrebbe non essere completamente compatibile con il progetto.",
+      "message": "Il pacchetto 'WebSocketSharp 1.0.3-rc11' è stato ripristinato mediante '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' e non mediante il framework di destinazione del progetto '.NETCoreApp,Version=v2.2'. Questo pacchetto potrebbe non essere completamente compatibile con il progetto.",
       "libraryId": "WebSocketSharp",
       "targetGraphs": [
         ".NETCoreApp,Version=v2.2"

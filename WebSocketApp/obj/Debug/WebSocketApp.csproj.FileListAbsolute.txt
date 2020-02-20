@@ -27,7 +27,6 @@ C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\obj\Debug\WebSocketApp
 C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.Form1.resources
 C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.Properties.Resources.resources
 C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.csproj.GenerateResource.cache
-C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.csproj.CoreCompileInputs.cache
 C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.csproj.CopyComplete
 C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.exe
 C:\Users\DAPHNE\Documents\4-CODING\WebSocket\WebSocketApp\obj\Debug\WebSocketApp.pdb

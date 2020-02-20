@@ -59,5 +59,18 @@
       
       this->display.display();
     }
+
+
+    void DisplayUI::ShowNumberWithCaption(String caption, double val){
+      this->display.clearDisplay();
+      this->display.setTextSize(1);
+      this->display.setCursor(0, 0);
+      this->display.setTextColor(WHITE);
+
+      this->display.println(caption);
+      this->display.setTextSize(2);
+      this->display.println(val);
+      this->display.display();
+    }
    
    

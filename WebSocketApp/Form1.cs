@@ -29,6 +29,42 @@ namespace WebSocketApp
         Consumer c1;
 
 
+        delegate void SetTextCallback(string text);
+
+        private void SetText(string text)
+        {
+            // InvokeRequired required compares the thread ID of the
+            // calling thread to the thread ID of the creating thread.
+            // If these threads are different, it returns true.
+            switch(text.Substring(0, 1))
+            {
+                case "T":
+                    if (this.lblTemp.InvokeRequired)
+                    {
+                        SetTextCallback d = new SetTextCallback(SetText);
+                        this.Invoke(d, new object[] { text });
+                    }
+                    else
+                    {
+                        this.lblTemp.Text = text.Substring(1);
+                    }
+                    break;
+
+                case "H":
+                    if (this.lblTemp.InvokeRequired)
+                    {
+                        SetTextCallback d = new SetTextCallback(SetText);
+                        this.Invoke(d, new object[] { text });
+                    }
+                    else
+                    {
+                        this.lblHum.Text = text.Substring(1);
+                    }
+                    break;
+                    
+            }
+           
+        }
 
         public Form1()
         {
@@ -170,7 +206,7 @@ namespace WebSocketApp
         public void InizializeConnection()
         {
 
-            wemosIp = DoGetHostAddresses("ESP8266");
+            wemosIp = "192.168.1.19"; //DoGetHostAddresses("ESP8266");
 
             using (ws = new WebSocket("ws://" + wemosIp + ":81"))
             {
@@ -179,7 +215,7 @@ namespace WebSocketApp
                 ws.Connect();
 
                 ws.OnMessage += (sender, e) => {
-                    MessageBox.Show(e.Data);
+                    SetText(e.Data);
                 };
 
             }
@@ -393,8 +429,7 @@ namespace WebSocketApp
         private void BtnAmbiente_Click(object sender, EventArgs e)
         {
             ws.Connect();
-            Thread t2 = new Thread(EffectB);
-            t2.Start();
+            ws.Send("T");
         }
     }
 

@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.ringPanel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnAmbiente = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnTrasmetti = new System.Windows.Forms.Button();
             this.txtConsole = new System.Windows.Forms.TextBox();
@@ -39,9 +40,14 @@
             this.ledToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spegniToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accendiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnAmbiente = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblTemp = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lblHum = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // ringPanel
@@ -63,6 +69,19 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(400, 463);
             this.panel1.TabIndex = 1;
+            // 
+            // btnAmbiente
+            // 
+            this.btnAmbiente.BackColor = System.Drawing.Color.Coral;
+            this.btnAmbiente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAmbiente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAmbiente.Location = new System.Drawing.Point(195, 330);
+            this.btnAmbiente.Name = "btnAmbiente";
+            this.btnAmbiente.Size = new System.Drawing.Size(126, 29);
+            this.btnAmbiente.TabIndex = 3;
+            this.btnAmbiente.Text = "Dati Ambiente";
+            this.btnAmbiente.UseVisualStyleBackColor = false;
+            this.btnAmbiente.Click += new System.EventHandler(this.BtnAmbiente_Click);
             // 
             // label1
             // 
@@ -126,18 +145,61 @@
             this.accendiToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
             this.accendiToolStripMenuItem.Text = "Accendi";
             // 
-            // btnAmbiente
+            // panel2
             // 
-            this.btnAmbiente.BackColor = System.Drawing.Color.Coral;
-            this.btnAmbiente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAmbiente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAmbiente.Location = new System.Drawing.Point(195, 330);
-            this.btnAmbiente.Name = "btnAmbiente";
-            this.btnAmbiente.Size = new System.Drawing.Size(126, 29);
-            this.btnAmbiente.TabIndex = 3;
-            this.btnAmbiente.Text = "Dati Ambiente";
-            this.btnAmbiente.UseVisualStyleBackColor = false;
-            this.btnAmbiente.Click += new System.EventHandler(this.BtnAmbiente_Click);
+            this.panel2.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.panel2.Controls.Add(this.label3);
+            this.panel2.Controls.Add(this.lblHum);
+            this.panel2.Controls.Add(this.label2);
+            this.panel2.Controls.Add(this.lblTemp);
+            this.panel2.Location = new System.Drawing.Point(803, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(401, 371);
+            this.panel2.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Monofonto", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label2.Location = new System.Drawing.Point(110, 44);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(191, 35);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Temperatura";
+            // 
+            // lblTemp
+            // 
+            this.lblTemp.AutoSize = true;
+            this.lblTemp.Font = new System.Drawing.Font("Monofonto", 71.99999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTemp.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblTemp.Location = new System.Drawing.Point(63, 79);
+            this.lblTemp.Name = "lblTemp";
+            this.lblTemp.Size = new System.Drawing.Size(294, 115);
+            this.lblTemp.TabIndex = 0;
+            this.lblTemp.Text = "00.00";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Monofonto", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label3.Location = new System.Drawing.Point(142, 194);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(127, 35);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Umidità";
+            // 
+            // lblHum
+            // 
+            this.lblHum.AutoSize = true;
+            this.lblHum.Font = new System.Drawing.Font("Monofonto", 71.99999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHum.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.lblHum.Location = new System.Drawing.Point(63, 229);
+            this.lblHum.Name = "lblHum";
+            this.lblHum.Size = new System.Drawing.Size(294, 115);
+            this.lblHum.TabIndex = 2;
+            this.lblHum.Text = "00.00";
             // 
             // Form1
             // 
@@ -145,7 +207,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(763, 371);
+            this.ClientSize = new System.Drawing.Size(1204, 371);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.ringPanel);
             this.Name = "Form1";
@@ -158,6 +221,8 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -175,6 +240,11 @@
         private System.Windows.Forms.ToolStripMenuItem spegniToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem accendiToolStripMenuItem;
         private System.Windows.Forms.Button btnAmbiente;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblTemp;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblHum;
     }
 }
 

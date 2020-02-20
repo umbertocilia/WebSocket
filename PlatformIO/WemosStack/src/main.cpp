@@ -10,12 +10,14 @@
 #include <DisplayUI.h>
 #include <Tasker.h>
 
-
-
 ESP8266WiFiMulti wifiMulti; 
 WebSocketsServer webSocket(81);
 DisplayUI UI; 
 Tasker tasker; 
+SHT3X sht30(0x45);
+
+
+
 
 const char *ssid = "ESP8266"; // The name of the Wi-Fi network that will be created
 const char *password = "123456";   // The password required to connect to it, leave blank for an open network
@@ -39,6 +41,7 @@ void startWiFi() { // Start a Wi-Fi access point, and try to connect to some giv
   wifiMulti.addAP("whyphy", "esp82666");
   wifiMulti.addAP("INCAS-GUEST", "Inc4sGroup");
   wifiMulti.addAP("FASTWEB-B3A2AD", "HAY9KMZPTK"); //CASA DI DANA
+  wifiMulti.addAP("WINNIE_THE_POOH", "dk7ll98jt9f2o0nuoiffppp9"); //CASA SICILIA
   
 
   Serial.println("Connecting");
@@ -117,6 +120,9 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
        
       } else if (payload[0] == 'N') {                      // the browser sends an N when the rainbow effect is disabled
       
+      } else if (payload[0] == 'T'){
+        Serial.println("\" T request\r\n");
+        
       }
       break;
 
@@ -135,6 +141,42 @@ void ProgressBarTask(){
   UI.DrawBottomGrid();
 }
 
+void SendTemp(){
+  if(sht30.get()==0){
+          String str = "";
+          str = "T" + (String)sht30.cTemp;
+          const char * c = str.c_str();
+          webSocket.broadcastTXT(c,str.length());
+        }
+}
+
+void SendHum(){
+  if(sht30.get()==0){
+          String str = "";
+          str = "H" + (String)sht30.humidity;
+          const char * c = str.c_str();
+          webSocket.broadcastTXT(c,str.length());
+        }
+}
+
+void ShowEnvironmentData(){
+  if(sht30.get()==0){
+    UI.ShowNumberWithCaption("Temp.ra: ",sht30.cTemp);
+    delay(2000);
+    yield();
+
+    UI.ShowNumberWithCaption("Umidita: ",sht30.humidity);
+    delay(2000);
+    yield();    
+  }
+}
+
+void ShowMyIP(){
+  UI.Clear();
+  UI.ShowMessage(ipToString(WiFi.localIP()));
+}
+
+
 void setup() {
 
   Serial.begin(115200);        // Start the Serial communication to send messages to the computer
@@ -143,8 +185,11 @@ void setup() {
 
   startWiFi();
   startWebSocket(); 
-  tasker.setInterval(ProgressBarTask, 2000);
-   
+ // tasker.setInterval(ProgressBarTask, 2000);
+  //tasker.setInterval(ShowEnvironmentData, 2000);
+  //tasker.setInterval(ShowMyIP, 2000);
+   tasker.setInterval(SendTemp, 10000);
+   tasker.setInterval(SendHum, 10000);
    
           
 }

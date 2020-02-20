@@ -17,6 +17,7 @@ class DisplayUI {
     void Reiceve();
     void Send();
     void DrawBottomGrid();
+    void ShowNumberWithCaption(String caption, double val);
 
     };
 
